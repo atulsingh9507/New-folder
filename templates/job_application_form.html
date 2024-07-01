@@ -1,0 +1,112 @@
+<!-- templates/job_application_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 600px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="file"] {
+            margin-top: 5px;
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h2>Job Application</h2>
+    <form action="/submit_application/" method="post" enctype="multipart/form-data">
+        <label for="job_title">Job Title:</label><br>
+        <input type="text" id="job_title" name="job_title" required><br><br>
+        
+        <label for="job_description">Job Description:</label><br>
+        <textarea id="job_description" name="job_description" rows="4" cols="50" required></textarea><br><br>
+        
+        <label for="fullName">Full Name:</label><br>
+        <input type="text" id="fullName" name="fullName" required><br><br>
+
+        <label for="phone">Phone:</label><br>
+        <input type="text" id="phone" name="phone" pattern="[0-9]{10,}" title="Enter a valid 10-digit phone number" required><br><br>
+        
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Enter a valid email address" required><br><br>
+        
+        <label for="upload_file">Resume (PDF, DOC, DOCX):</label><br>
+        <input type="file" id="upload_file" name="upload_file" accept=".pdf,.doc,.docx" required><br><br>
+        
+        <label for="photo">Photo (optional, JPEG, PNG):</label><br>
+        <input type="file" id="photo" name="photo" accept="image/jpeg, image/png"><br><br>
+        
+        <label for="address">Address:</label><br>
+        <textarea id="address" name="address" rows="4" required></textarea><br><br>
+        
+        <label for="position">Position Applying For:</label><br>
+        <input type="text" id="position" name="position" required><br><br>
+        
+        <label for="gender">Gender:</label><br>
+        <select id="gender" name="gender" required>
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select><br><br>
+        
+        <label for="qualification">Qualification:</label><br>
+        <select id="qualification" name="qualification" required>
+            <option value="">Select Qualification</option>
+            <option value="highschool">High School</option>
+            <option value="undergraduate">Undergraduate</option>
+            <option value="graduate">Graduate</option>
+            <option value="postgraduate">Postgraduate</option>
+            <option value="doctorate">Doctorate</option>
+        </select><br><br>
+        
+        <label for="reference">Reference (optional):</label><br>
+        <textarea id="reference" name="reference" rows="4"></textarea><br><br>
+        
+        <button type="submit">Submit Application</button>
+    </form>
+</body>
+</html>

@@ -118,6 +118,69 @@ async def submit_application(
     db.commit()
 
     return templates.TemplateResponse("application_success.html", {"request": request})
+@app.post("/delete_application/", response_class=HTMLResponse)
+async def delete_application(
+    request: Request,
+    id: int = Form(...),
+    db: Session = Depends(get_db)
+):
+    application = db.query(JobApplication).filter(JobApplication.id == id).first()
+    if not application:
+        raise HTTPException(status_code=404, detail="Application not found")
+
+    # Delete application from database
+    db.delete(application)
+    db.commit()
+
+    return templates.TemplateResponse("delete_success.html", {"request": request})
+
+@app.post("/update_application/", response_class=HTMLResponse)
+async def update_application(
+    request: Request,
+    id: int = Form(...),
+    job_title: str = Form(...),
+    job_description: str = Form(...),
+    fullName: str = Form(...),
+    email: str = Form(...),
+    phone: str = Form(...),
+    upload_file: UploadFile = Form(None),
+    photo: UploadFile = Form(None),
+    address: str = Form(...),
+    position: str = Form(...),
+    gender: str = Form(...),
+    qualification: str = Form(...),
+    reference: str = Form(None),
+    db: Session = Depends(get_db)
+):
+    application = db.query(JobApplication).filter(JobApplication.id == id).first()
+    if not application:
+        raise HTTPException(status_code=404, detail="Application not found")
+
+    # Update application data
+    application.job_title = job_title
+    application.job_description = job_description
+    application.fullName = fullName
+    application.email = email
+    application.phone = phone
+    application.address = address
+    application.position = position
+    application.gender = gender
+    application.qualification = qualification
+    application.reference = reference
+
+    # Handle file uploads if provided
+    if upload_file:
+        resume_path = save_file(upload_file)
+        application.upload_file = resume_path
+
+    if photo:
+        photo_path = save_file(photo)
+        application.photo = photo_path
+
+    db.commit()
+
+    return templates.TemplateResponse("update_success.html", {"request": request})
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
